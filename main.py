@@ -8,8 +8,8 @@ from src import db as saved_dictionary
 
 client = discord.Client()
 log = logger.Logger()
-db = saved_dictionary.Saved_Dict()
-VERSION = "20210315.1209.master"
+db = saved_dictionary.Saved_Dict.load_db()
+VERSION = "20210315.1649.master"
 msghandler.VERSION = VERSION
 
 command_map = {
