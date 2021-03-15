@@ -1,14 +1,15 @@
 import datetime
+import pathlib
 
 class Logger:
   __name = None
   __file = None
 
   def __init__(self):
-    self.__name = "logs/log_{}".format(datetime.date.today())
+    self.__name = pathlib.Path("logs/log_{}".format(datetime.date.today()))
 
   def __str__(self):
-    return self.__name
+    return str(self.__name)
 
   def __write_log(self,msg,designator):
     with open(self.__name,'a') as file:

@@ -1,4 +1,4 @@
-from replit import db
+from .db import *
 import csv
 import os
 

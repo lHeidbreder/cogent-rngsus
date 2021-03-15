@@ -1,11 +1,17 @@
-from replit import db
+from src import db as saved_dictionary
 import os
 
 import discord
 import random
-from rollrequest import RollRequest
-import charownership as co
+#import rollrequest
+from .rollrequest import RollRequest
+#from .charownership import *
+import src.charownership as co
 import requests
+
+
+db = saved_dictionary.Saved_Dict()
+VERSION = ""
 
 def handle_attachments(message):
   for a in message.attachments:
@@ -22,7 +28,7 @@ def __save_file(attachment,designator):
 
 def handle_info(message):
   return (
-  "Cogent Bot for Discord\nVersion:" + os.getenv('VERSION')
+  "Cogent Bot for Discord\nVersion:" + VERSION
 + "\n" + "-"*10 + "\n"
 + "Rolling syntax as follows:\n"
 + '$roll / $r - Rolls a single d6\n'

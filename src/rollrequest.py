@@ -25,7 +25,7 @@ class RollRequest:
       return random.randint(1,6)
     #Alternatively append 1 and use the function as it makes for simpler maintainability:
   #	if len(arr) == 1:
-  #		arr.append('1')
+  #		arr.append(' 1')
     
     
     #Random values

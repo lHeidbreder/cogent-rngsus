@@ -1,11 +1,16 @@
-from replit import db
 import discord
 import os
 import datetime
-import src
+#import src
+from src import logger
+from src import msghandler
+from src import db as saved_dictionary
 
 client = discord.Client()
 log = logger.Logger()
+db = saved_dictionary.Saved_Dict()
+VERSION = "20210315.1209.master"
+msghandler.VERSION = VERSION
 
 command_map = {
   'info'  : msghandler.handle_info,
@@ -59,4 +64,7 @@ def prm(*args):
     print(a)
     log.message(a)
 
-client.run(os.getenv('RNGSUS_TOKEN'))
+try:
+	client.run(os.getenv('RNGSUS_TOKEN'))
+except:
+	print('Couldn\'t establish connection; is variable RNGSUS_TOKEN defined?')
