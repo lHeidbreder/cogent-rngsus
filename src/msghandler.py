@@ -10,7 +10,7 @@ import src.charownership as co
 import requests
 
 
-db = saved_dictionary.Saved_Dict()
+db = saved_dictionary.Saved_Dict.load_db()
 VERSION = ""
 
 def handle_attachments(message):
@@ -100,16 +100,23 @@ def handle_tellme(message):
   return msg
 
 def handle_damage(message):
+  severity = None
   try:
     severity = int(message.content.split()[1])-1
     co.chars[co.whois(message.author)].get_stat("Wounds")[severity] += 1
     return 'Wound of Level {} added. {} in total'.format(severity+1,co.chars[co.whois(message.author)].get_stat("Wounds")[severity])
   except:
-    return 'Needs a number'
+    if co.whois(message.author) == str(message.author)[:-5]:
+      return 'You don\'t own a character'
+	elif severity == None:
+      return 'Needs a number'
+	return 'Unknown failure'
 
 def handle_heal(message):
   try:
     severity = int(message.content.split()[1])-1
+	if co.chars[co.whois(message.author)].get_stat("Wounds")[severity] <= 0:
+	  return 'Nothing to heal here'
     co.chars[co.whois(message.author)].get_stat("Wounds")[severity] = max(co.chars[co.whois(message.author)].get_stat("Wounds")[severity]-1,0)
     return 'A wound of Level {} healed. {} remain'.format(severity+1,co.chars[co.whois(message.author)].get_stat("Wounds")[severity])
   except:
@@ -124,4 +131,4 @@ def handle_clear(message):
     return 'Database was completely and irrevocably cleared'
 
 def handle_keys(message):
-  return str(db.keys())
+  return str([a for a in db.keys()])

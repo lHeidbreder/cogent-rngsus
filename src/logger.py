@@ -1,5 +1,6 @@
 import datetime
 import pathlib
+import os
 
 class Logger:
   __name = None
@@ -7,6 +8,8 @@ class Logger:
 
   def __init__(self):
     self.__name = pathlib.Path("logs/log_{}".format(datetime.date.today()))
+    if not(pathlib.Path("./logs").exists()) or not(pathlib.Path("./logs").is_dir()):
+      os.mkdir("./logs")
 
   def __str__(self):
     return str(self.__name)

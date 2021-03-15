@@ -40,13 +40,18 @@ class RollRequest:
     #Successes
     successes = 0
     if arr[1][-1] == '+':
-      challenge_level = 3
+      target = 3
     else:
-      challenge_level = 4
+      target = 4
     for val in rndvals:
-      if val >= challenge_level:
+      if val >= target:
         successes += 1
     
+	#Optional target
+	target = 0
+	if len(arr) > 2 and arr[2].isnumeric:
+		challenge_level = int(arr[2])
+	
     #Determine format
     format = '$r x'
     if arr[1][-1] in ('d','~'): #== 'd':
@@ -64,8 +69,8 @@ class RollRequest:
     #return message
     return msg_switcher[format]
     
-  def form_x_t(self, values, successes, target):
-    if successes >= target:
-      return toString(values, '\nSuccess with ', (successes-target), ' Victory Levels!')
+  def form_x_t(self, values, successes, challenge_level):
+    if successes >= challenge_level:
+      return toString(values, '\nSuccess with ', (successes-challenge_level), ' Victory Levels!')
     else:
-      return toString(values, '\nFailure with ', (target-successes), ' Levels of Failure')
+      return toString(values, '\nFailure with ', (challenge_level-successes), ' Levels of Failure')

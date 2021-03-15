@@ -1,18 +1,22 @@
 import pathlib
 import pickle
+import os
 
 class Saved_Dict(dict):
-  path = pathlib.Path('../saves/db')
+  saves_path = pathlib.Path('./saves/')
+  if not saves_path.exists():
+    os.mkdir(saves_path)
+  
   def __setitem__(self, key, value, /):
-    super(db,self).__setitem__(key, value)
-    with open(self.path + '.pkl', 'wb'):
-      pickle.dump(self, self.Path, pickle.HIGHEST_PROTOCOL)
+    super(Saved_Dict,self).__setitem__(key, value)
+    with open(self.saves_path / 'db.pkl', 'wb') as pickled_dict:
+      pickle.dump(self, pickled_dict, pickle.HIGHEST_PROTOCOL)
     
   @staticmethod
   def load_db():
     try:
-      with open(Saved_Dict.path + '.pkl', 'rb') as pickled_dict:
+      with open(Saved_Dict.saves_path / 'db.pkl', 'rb') as pickled_dict:
         return pickle.load(pickled_dict)
     except:
       print('No dict saved')
-      return None
+      return Saved_Dict()

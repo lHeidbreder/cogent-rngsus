@@ -1,13 +1,15 @@
-from .db import *
+from src import db as saved_dictionary
 import csv
 import os
 
 chars = []
+db = saved_dictionary.Saved_Dict.load_db()
 
 def whois(user):
   try:
     return db[str(user)[:-5]+"_nick"]
   except:
+    print('key not found: ', str(user)[:-5]+"_nick")
     return str(user)[:-5]
 
 def read_csv(filepath):
