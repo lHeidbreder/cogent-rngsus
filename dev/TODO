@@ -1,0 +1,9 @@
+> Inventory? // "Inventory":[*itemlist*]
+> Keys per Server?
+> Sum up Skills (e.g. Str + Athletics) // subtract wounds as well?
+> Infoprompt (keys in character sheet)
+> Save characters from db to csv
+
+< Logger doesn't log
+< Wounding? // extra commands ($dmg ; $heal), [*nr lvl1 wounds*,*nr lvl2 wounds*...]
+< Easier keys

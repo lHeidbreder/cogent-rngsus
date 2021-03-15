@@ -1,0 +1,70 @@
+elif message.content.lower().startswith('$r') or message.content.lower().startswith('$roll'):
+    msg = msghandler.handle_roll(message)
+
+  elif message.content.lower().startswith('$become') or message.content.lower().startswith('$iam'):
+    msg = msghandler.handle_become(message)
+  
+  elif message.content.lower().startswith('$tellme'):
+    msg = msghandler.handle_tellme(message)
+
+  elif message.content.lower().startswith('$damage') or message.content.lower().startswith('$dmg'):
+    msg = msghandler.handle_dmg(message)
+
+  elif message.content.lower().startswith('$clear db now'):
+    msg = msghandler.handle_clear()
+
+
+
+
+
+def process(self):
+    msg = ''
+    arr = self.__form.split()
+
+    # '$roll xd'
+    if len(arr) == 2 and arr[1][-1] == 'd':
+      values = []
+      x = int(arr[1][0:-1])
+      for i in range(x):
+        values.append(random.randrange(1,7)) 
+      msg = toString(x, 'd6: ', values, '\nSum: ', sum(values))
+    
+    # '$roll x'
+    elif len(arr) == 2:
+      succ = 0
+      values = []
+      x = int(arr[1])
+      for i in range(x):
+        values.append(random.randrange(1,7))
+        if values[i] >= 4:
+          succ += 1
+      msg = toString(x, 'd6: ', values, '\nSuccesses: ', succ)
+
+    # '$roll x+ t' || '$roll x t'
+    elif len(arr) == 3:
+      values = []
+
+      if arr[1][-1] == '+':
+        target = 3
+      else:
+        target = 4
+
+      t = int(arr[2])
+      if target == 3:
+        x = int(arr[1][0:-1])
+      else:
+        x = int(arr[1])
+      y = 0
+
+      for i in range(x):
+        rnd = random.randrange(1,7)
+        values.append(rnd)
+        if rnd >= target:
+          y += 1
+      if y >= t:
+        msg = toString(values, '\nSuccess with ', (y-t), ' Victory Levels!')
+      else:
+        msg = toString(values, '\nFailure with ', (t-y), ' Levels of Failure')
+
+
+    return msg
