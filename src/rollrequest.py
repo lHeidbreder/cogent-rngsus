@@ -24,8 +24,8 @@ class RollRequest:
     if len(arr) == 1:
       return random.randint(1,6)
     #Alternatively append 1 and use the function as it makes for simpler maintainability:
-  #	if len(arr) == 1:
-  #		arr.append(' 1')
+  #    if len(arr) == 1:
+  #        arr.append(' 1')
     
     
     #Random values
@@ -47,11 +47,11 @@ class RollRequest:
       if val >= target:
         successes += 1
     
-	#Optional target
-	target = 0
-	if len(arr) > 2 and arr[2].isnumeric:
-		challenge_level = int(arr[2])
-	
+    #Optional target
+    target = 0
+    if len(arr) > 2 and arr[2].isnumeric:
+        challenge_level = int(arr[2])
+    
     #Determine format
     format = '$r x'
     if arr[1][-1] in ('d','~'): #== 'd':
