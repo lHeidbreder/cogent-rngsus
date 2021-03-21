@@ -34,9 +34,12 @@ async def on_disconnect():
 @client.event
 async def on_ready():
   pr('Bot active as user {0.user}'.format(client))
-  pr('The following keys are saved:')
-  for k in db.keys():
-    pr('-' + k)
+  if len(db.keys()) > 0:
+    pr('The following keys are saved:')
+    for k in db.keys():
+      pr('-' + k)
+  else:
+    pr('No keys are currently saved')
 
 @client.event
 async def on_message(message):

@@ -108,15 +108,15 @@ def handle_damage(message):
   except:
     if co.whois(message.author) == str(message.author)[:-5]:
       return 'You don\'t own a character'
-	elif severity == None:
+    elif severity == None:
       return 'Needs a number'
-	return 'Unknown failure'
+    return 'Unknown failure'
 
 def handle_heal(message):
   try:
     severity = int(message.content.split()[1])-1
-	if co.chars[co.whois(message.author)].get_stat("Wounds")[severity] <= 0:
-	  return 'Nothing to heal here'
+    if co.chars[co.whois(message.author)].get_stat("Wounds")[severity] <= 0:
+      return 'Nothing to heal here'
     co.chars[co.whois(message.author)].get_stat("Wounds")[severity] = max(co.chars[co.whois(message.author)].get_stat("Wounds")[severity]-1,0)
     return 'A wound of Level {} healed. {} remain'.format(severity+1,co.chars[co.whois(message.author)].get_stat("Wounds")[severity])
   except:

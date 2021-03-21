@@ -50,7 +50,9 @@ class RollRequest:
     #Optional target
     target = 0
     if len(arr) > 2 and arr[2].isnumeric:
-        challenge_level = int(arr[2])
+      challenge_level = int(arr[2])
+    else:
+      challenge_level = 1
     
     #Determine format
     format = '$r x'
@@ -60,11 +62,12 @@ class RollRequest:
       format += ' t'
     
     #Make message
+    #TODO: lazier evaluation; currently makes every available answer before picking one
     msg_switcher = {
-      '$r x': toString(amount, 'd6: ', rndvals, '\nSuccesses: ', successes),
-      '$r xd': toString(amount, 'd6: ', rndvals, '\nSum: ', sum(rndvals)),
+      '$r x':   toString(amount, 'd6: ', rndvals, '\nSuccesses: ', successes),
+      '$r xd':  toString(amount, 'd6: ', rndvals, '\nSum: ', sum(rndvals)),
       '$r x t': self.form_x_t(rndvals, successes, challenge_level),
-      '$r x~': toString(amount, 'd6: ', rndvals, '\nAverage: ', sum(rndvals)/len(rndvals))
+      '$r x~':  toString(amount, 'd6: ', rndvals, '\nAverage: ', sum(rndvals)/len(rndvals))
     }
     #return message
     return msg_switcher[format]
