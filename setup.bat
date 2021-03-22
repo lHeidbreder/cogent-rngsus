@@ -8,3 +8,8 @@ py -3 -m pip install -U requests
 @echo.
 @echo Please check the results
 @pause
+
+@echo.
+@set /p token=Enter your bot's token:
+@setx RNGSUS_TOKEN %token%
+@pause

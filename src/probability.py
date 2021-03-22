@@ -68,7 +68,7 @@ class probability_request:
     #challenge level
     try:
       args['cl'] = int(arr[2])
-    except:
+    except Exception:
       args['cl'] = 0
     
     msg_switcher = {

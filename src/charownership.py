@@ -8,7 +8,7 @@ db = {}
 def whois(user):
   try:
     return db[str(user)[:-5]+"_nick"]
-  except:
+  except Exception:
     print('key not found: ', str(user)[:-5]+"_nick")
     return str(user)[:-5]
 
@@ -59,14 +59,14 @@ class Character():
 
     try:
       self.__stats["Wounds"] = row["Wounds"][1:-1].split(',')
-    except:
+    except Exception:
       print('Wounds not in standard format for',self.get_stat('Name'))
         
     
   def get_stat(self,stat_key):
     try: #If list or similar, return copy not pointer
       return self.__stats[stat_key].copy()
-    except:
+    except Exception:
       return self.__stats[stat_key]
   
   #returns the stats dictionary to be saved in the db
