@@ -3,7 +3,7 @@ import csv
 import os
 
 chars = []
-db = saved_dictionary.Saved_Dict.load_db()
+db = {}
 
 def whois(user):
   try:

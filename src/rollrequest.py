@@ -54,12 +54,12 @@ class RollRequest:
     else:
       challenge_level = 1
     
-    #Determine format
-    format = '$r x'
+    #Determine pattern
+    pattern = '$r x'
     if arr[1][-1] in ('d','~'): #== 'd':
-      format += arr[1][-1] 
+      pattern += arr[1][-1] 
     if len(arr) > 2:
-      format += ' t'
+      pattern += ' t'
     
     #Make message
     #TODO: lazier evaluation; currently makes every available answer before picking one
@@ -70,7 +70,7 @@ class RollRequest:
       '$r x~':  toString(amount, 'd6: ', rndvals, '\nAverage: ', sum(rndvals)/len(rndvals))
     }
     #return message
-    return msg_switcher[format]
+    return msg_switcher[pattern]
     
   def form_x_t(self, values, successes, challenge_level):
     if successes >= challenge_level:
