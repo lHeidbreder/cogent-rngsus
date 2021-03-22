@@ -5,12 +5,13 @@ import discord
 import random
 #import rollrequest
 from .rollrequest import RollRequest
+from .probability import probability_request
 #from .charownership import *
 import src.charownership as co
 import requests
 
 
-db = saved_dictionary.Saved_Dict.load_db()
+db = {}
 VERSION = ""
 
 def handle_attachments(message):
@@ -38,6 +39,7 @@ def handle_info(message):
 + '$roll x+ t - Same as above but counts 3s as well\n'
 + '$roll xd - Rolls x d6 and sums them up\n'
 + '$roll x~ - Rolls x d6 and gives the average\n\n'
++ '$prob / p - Probability for the roll, in the same pattern as \"roll\"\n\n'
 + '$become / $iam nickname - Allows you to change your nickname\n'
 + '$become myself - Removes your nickname\n\n'
 + '$tellme x - If you are associated with a character, you are told your bonus for stat x\n'
@@ -53,6 +55,10 @@ def handle_roll(message):
   request = RollRequest(message.content)
   rnd = request.process()
   return 'Roll as requested by {}:\n{}'.format(co.whois(message.author),rnd)
+
+def handle_probability(message):
+  request = probability_request(message.content)
+  return 'Probable result as requested by {}:\n{}'.format(co.whois(message.author), request.process())
 
 def handle_become(message):
   if len(message.content.split(' ',1)) > 1:

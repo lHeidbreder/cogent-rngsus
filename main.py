@@ -4,6 +4,7 @@ import datetime
 #import src
 from src import logger
 from src import msghandler
+from src import charownership
 from src import db as saved_dictionary
 
 client = discord.Client()
@@ -11,11 +12,15 @@ log = logger.Logger()
 db = saved_dictionary.Saved_Dict.load_db()
 VERSION = "20210315.1649.master"
 msghandler.VERSION = VERSION
+msghandler.db = db
+charownership.db = db
 
 command_map = {
   'info'  : msghandler.handle_info,
   'r'     : msghandler.handle_roll,
   'roll'  : msghandler.handle_roll,
+  'p'     : msghandler.handle_probability,
+  'prob'  : msghandler.handle_probability,
   'become': msghandler.handle_become,
   'iam'   : msghandler.handle_become,
   'tellme': msghandler.handle_tellme,

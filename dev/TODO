@@ -3,6 +3,7 @@
 > Sum up Skills (e.g. Str + Athletics) // subtract wounds as well?
 > Infoprompt (keys in character sheet)
 > Save characters from db to csv
+> char_ownership prints an error message on every whois() call
 
 < Logger doesn't log
 < Wounding? // extra commands ($dmg ; $heal), [*nr lvl1 wounds*,*nr lvl2 wounds*...]
