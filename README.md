@@ -11,5 +11,3 @@ Intended usage:
 5. If something went wrong, create an environment variable with the key 'RNGSUS_TOKEN' and the token as the value. This will make it more convenient to start the bot.
 6. Run main.py from the commandline
 
-Utilizes discord and requests libraries, so make sure you have those.<br>
-Setup scripts might be coming in the future
