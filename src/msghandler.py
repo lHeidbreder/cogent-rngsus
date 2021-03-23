@@ -98,7 +98,7 @@ def handle_tellme(message):
       if val >= 0:
         prefix = '+'
       msg = '{}\'s {} gets {}{} dice'.format(co.whois(message.author),key,prefix,val)
-    except:
+    except Exception:
       msg = '{}\'s {}: {}'.format(co.whois(message.author),key,val)
   else:
     msg = 'You don\'t have an alterego, {}'.format(co.whois(message.author))
@@ -111,7 +111,7 @@ def handle_damage(message):
     severity = int(message.content.split()[1])-1
     co.chars[co.whois(message.author)].get_stat("Wounds")[severity] += 1
     return 'Wound of Level {} added. {} in total'.format(severity+1,co.chars[co.whois(message.author)].get_stat("Wounds")[severity])
-  except:
+  except Exception:
     if co.whois(message.author) == str(message.author)[:-5]:
       return 'You don\'t own a character'
     elif severity == None:
@@ -125,14 +125,14 @@ def handle_heal(message):
       return 'Nothing to heal here'
     co.chars[co.whois(message.author)].get_stat("Wounds")[severity] = max(co.chars[co.whois(message.author)].get_stat("Wounds")[severity]-1,0)
     return 'A wound of Level {} healed. {} remain'.format(severity+1,co.chars[co.whois(message.author)].get_stat("Wounds")[severity])
-  except:
+  except Exception:
     return 'Needs a number'
 
 def handle_clear(message):
   if message.content.lower().startswith('$clear db now'):
     try:
       db.clear()
-    except:
+    except Exception:
       return 'Clearing failed'
     return 'Database was completely and irrevocably cleared'
 

@@ -1,0 +1,48 @@
+Commands:
+The bot listens to messages that start with a dollar sign ($).
+A list of available commands are accessible under the '$info' command.
+
+Further commands are:
+--$roll-- / --$r--
+Takes up to two parameters and a single option.
+No parameters will roll a single d6 and tell you the result.
+One parameter ($r x) will roll an amount of x d6 and count successes. This is what is used most often for combat.
+One parameter and the '+' option ($r x+) will roll an amount of x d6 and count successes, also counting 3s as a success as described by the destiny point rules.
+One parameter and the 'd' option ($r xd) will roll an amount of x d6 and sum up the eyes.
+One parameter and the '~' option ($r x~) will roll an amount of x d6 and evaluate the average.
+Two parameters ($r x y) will roll an amount of x d6 against a challenge level of y. This is what will be most commonly used during exploration.
+Two parameters and the '+' option ($r x+ y) will roll an amount of x d6 against a challenge level of y, counting 3s as successes as described by the destiny point rules.
+
+--$prob-- / --$p--
+Takes up to two parameters and a single option, very similar to '$roll'.
+One parameter ($p x) will give you the estimated amount of successes when rolling x d6.
+One parameter and the '+' option ($p x+) will give you the estimated amount of successes when rolling x d6, counting 3s as successes as described by the destiny point rules.
+One parameter and the 'd' option ($p xd) will give you a range of what sum you can expect when rolling x d6.
+Two parameters ($p x y) will give you the chance of succeeding at a roll of x d6 against a challenge level of y.
+Two parameters and the '+' option ($p x+ y) will give you the chance of succeeding at a roll of x d6 against a challenge level of y, counting 3s as successes as described by the destiny point rules.
+
+--$become-- / --$iam--
+Takes one parameter.
+Changes how the bot will address you. Also it is necessary to take your character's name if it was uploaded to take control of it.
+Multiple users can take the same name, allowing them to control the same character.
+
+--$tellme--
+Takes one parameter. ($tellme x)
+If you are controlling a character, this will tell you the desired stat, specified by x.
+
+--$damage-- / --$dmg--
+Takes one parameter ($dmg x). Counterpart to '$heal'.
+If you are controlling a character, this will add an injury of the severity specified by x. For example '$dmg 2' will add a medium injury.
+
+--$heal--
+Takes one parameter ($heal x). Counterpart to '$dmg'.
+If you are controlling a character, this will remove an injury of the severity specified by x. For example '$heal 2' will heal one medium injury.
+
+--$keys--
+Gives you all registered keys in the database. Not part of the info dialog. Used mainly for debugging.
+
+--$clear db now--
+Clears the whole database. Not part of the info dialog. Use with caution.
+
+
+Further, the bot can handle a character table. Fill out the csv table added called "characters.csv" and upload it to a server where the bot can receive it.

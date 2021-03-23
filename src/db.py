@@ -22,6 +22,6 @@ class Saved_Dict(dict):
     try:
       with open(Saved_Dict.saves_path / 'db.pkl', 'rb') as pickled_dict:
         return pickle.load(pickled_dict)
-    except:
+    except Exception:
       print('No dict saved')
       return Saved_Dict()

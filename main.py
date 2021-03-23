@@ -10,9 +10,9 @@ from src import db as saved_dictionary
 client = discord.Client()
 log = logger.Logger()
 db = saved_dictionary.Saved_Dict.load_db()
-VERSION = "20210315.1649.master"
+VERSION = "20210322.2116"
 msghandler.VERSION = VERSION
-msghandler.db = db
+msghandler.db = db  
 charownership.db = db
 
 command_map = {
@@ -72,7 +72,15 @@ def prm(*args):
     print(a)
     log.message(a)
 
+def get_token():
+  TOKEN = ""
+  TOKEN = os.getenv('RNGSUS_TOKEN')
+  if TOKEN in ("",None):
+    print("RNGSUS_TOKEN was not set in the environment")
+    TOKEN = input("Enter your token: ")
+  return TOKEN
+
 try:
-	client.run(os.getenv('RNGSUS_TOKEN'))
-except:
-	print('Couldn\'t establish connection; is variable RNGSUS_TOKEN defined?')
+	client.run(get_token())
+except Exception:
+	print('Couldn\'t establish connection; is variable RNGSUS_TOKEN valid?')
