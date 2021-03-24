@@ -1,5 +1,6 @@
 from src import db as saved_dictionary
 import os
+import pathlib
 
 import discord
 import random
@@ -17,7 +18,7 @@ VERSION = ""
 def handle_attachments(message):
   for a in message.attachments:
     if a.filename.lower().endswith('characters.csv'):
-      designator = 'chars.csv'
+      designator = pathlib.Path('chars.csv')
       __save_file(a,designator)
       co.read_csv(designator)
 
@@ -47,9 +48,10 @@ def handle_info(message):
 + '$heal x - Removes a wound of severity x'
 )
 
-def save(self,message):
-  for c in co.chars:
-    db[c.get_stat('Name')] = c.me()
+def handle_save(message):
+  co.save_chars()
+  co.write_to_db()
+  return 'Characters saved to file'
 
 def handle_roll(message):
   request = RollRequest(message.content)
@@ -88,16 +90,17 @@ def handle_tellme(message):
 
   msg = ''
   key = message.content[message.content.index('me ')+3:]
-  if (co.whois(message.author)) not in co.chars or not isinstance(co.chars[co.whois(message.author)],dict):
+  if (co.whois(message.author)+'_char') not in db.keys() or not isinstance(db[co.whois(message.author)+'_char'],co.RPGCharacter):
     msg = 'You don\'t own a character, {}'.format(co.whois(message.author))
   elif co.whois(message.author) != str(message.author):
-    val = co.chars[co.whois(message.author)].get_stat(key)
+    val = db[co.whois(message.author)+'_char'].get_roll(key)
+    
+    if(val == None):
+      val = co.chars[co.whois(message.author)+'_char'].get(key)
+    
     try:
       int(val)
-      prefix = ''
-      if val >= 0:
-        prefix = '+'
-      msg = '{}\'s {} gets {}{} dice'.format(co.whois(message.author),key,prefix,val)
+      msg = '{}\'s {} gets {} dice'.format(co.whois(message.author),key,val)
     except Exception:
       msg = '{}\'s {}: {}'.format(co.whois(message.author),key,val)
   else:
@@ -109,24 +112,24 @@ def handle_damage(message):
   severity = None
   try:
     severity = int(message.content.split()[1])-1
-    co.chars[co.whois(message.author)].get_stat("Wounds")[severity] += 1
-    return 'Wound of Level {} added. {} in total'.format(severity+1,co.chars[co.whois(message.author)].get_stat("Wounds")[severity])
-  except Exception:
+    db[co.whois(message.author)+'_char'].get("wounds")[severity] += 1
+    return 'Wound of Level {} added. {} in total\n{}'.format(severity+1,db[co.whois(message.author)+'_char'].get("Wounds")[severity],db[co.whois(message.author)+'_char'].get("Wounds"))
+  except Exception as e:
     if co.whois(message.author) == str(message.author)[:-5]:
       return 'You don\'t own a character'
     elif severity == None:
       return 'Needs a number'
-    return 'Unknown failure'
+    return 'Unknown failure: ' + str(e)
 
 def handle_heal(message):
   try:
     severity = int(message.content.split()[1])-1
-    if co.chars[co.whois(message.author)].get_stat("Wounds")[severity] <= 0:
-      return 'Nothing to heal here'
-    co.chars[co.whois(message.author)].get_stat("Wounds")[severity] = max(co.chars[co.whois(message.author)].get_stat("Wounds")[severity]-1,0)
-    return 'A wound of Level {} healed. {} remain'.format(severity+1,co.chars[co.whois(message.author)].get_stat("Wounds")[severity])
-  except Exception:
-    return 'Needs a number'
+    if db[co.whois(message.author)+'_char'].get("Wounds")[severity] <= 0:
+      return 'Nothing to heal here\n{}'.format(db[co.whois(message.author)+'_char'].get("Wounds"))
+    db[co.whois(message.author)+'_char'].get("Wounds")[severity] = max(db[co.whois(message.author)+'_char'].get("Wounds")[severity]-1,0)
+    return 'A wound of Level {} healed. {} remain\n{}'.format(severity+1,db[co.whois(message.author)+'_char'].get("Wounds")[severity],db[co.whois(message.author)+'_char'].get("Wounds"))
+  except Exception as e:
+    return 'Needs a number\n' + str(e)
 
 def handle_clear(message):
   if message.content.lower().startswith('$clear db now'):

@@ -14,6 +14,7 @@ VERSION = "20210322.2116"
 msghandler.VERSION = VERSION
 msghandler.db = db  
 charownership.db = db
+charownership.load_chars()
 
 command_map = {
   'info'  : msghandler.handle_info,
@@ -27,6 +28,7 @@ command_map = {
   'dmg'   : msghandler.handle_damage,
   'damage': msghandler.handle_damage,
   'heal'  : msghandler.handle_heal,
+  'save'  : msghandler.handle_save,
   'clear' : msghandler.handle_clear,
   'keys'  : msghandler.handle_keys
 }

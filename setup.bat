@@ -10,6 +10,6 @@ py -3 -m pip install -U requests
 @pause
 
 @echo.
-@set /p token=Enter your bot's token:
+@set /p token=Enter your bot's token to be set as env variable:
 @setx RNGSUS_TOKEN %token%
 @pause

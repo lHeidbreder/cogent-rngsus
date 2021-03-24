@@ -1,0 +1,4 @@
+name,player,str,ref,int,perception,athletics,grapple,swim,aim/throw,acrobatics,ride/pilot,sleight of hand,stealth,deception,persuasion,infiltration,survival,vocation names,vocation values,proficiency names,proficiency values,disabling characteristics,cp,dp,wounds
+Largakh,Oskar,2,0,0,2,4,2,0,0,0,0,0,0,0,0,-1,0,Orc Chieftain,1,Unarmed,2,"Unable to lie,Delusion",3,3,
+Tal,Tal,0,0,2,1,-1,0,0,0,1,1,1,2,3,3,2,0,,,Pact Magic,2,Easily Intimidated,3,3,"1,1"
+Caldar,Horseman,0,1,1,0,0,0,0,1,2,1,0,1,-1,0,1,1,Blacksmith,2,"Fire Arms,Gunfu","1,2",Phobia of interacting with women,3,3,
