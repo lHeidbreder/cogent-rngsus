@@ -77,3 +77,30 @@ class RollRequest:
       return toString(values, '\nSuccess with ', (successes-challenge_level), ' Victory Levels!')
     else:
       return toString(values, '\nFailure with ', (challenge_level-successes), ' Levels of Failure')
+
+
+class FateRequest:
+  def __init__(self, roll=None):
+    if not isinstance(roll, int) or roll not in range(1,21):
+      try:
+        self.__roll = int(roll)
+      except TypeError:
+        self.__roll = random.randint(1,20)
+    else:
+      self.__roll = roll
+
+  def result(self):
+    msg = 'Alea iacta est: {}\n'.format(self.__roll)
+    
+    if self.__roll < 4: #1-3 / 3
+      rtn = 'It is too late to run...'
+    elif self.__roll < 8: #4-7 / 4
+      rtn = 'Great perils are ahead. Brace yourselves and may fortune be with you.'
+    elif self.__roll < 14: #8-13 / 6
+      rtn = 'Things are unclear. Prove yourselves and you will preveil.'
+    elif self.__roll < 18: #14-17 / 4
+      rtn = 'Things ahead seem to be set in your favor. But do not let your guard down.'
+    else: #18-20 / 3
+      rtn = 'Fortune favors fools. You are in luck today.'
+      
+    return msg + rtn

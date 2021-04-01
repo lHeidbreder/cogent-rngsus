@@ -5,7 +5,7 @@ import pathlib
 import discord
 import random
 #import rollrequest
-from .rollrequest import RollRequest
+from .rollrequest import RollRequest, FateRequest
 from .probability import probability_request
 #from .charownership import *
 import src.charownership as co
@@ -40,7 +40,8 @@ def handle_info(message):
 + '$roll x+ t - Same as above but counts 3s as well\n'
 + '$roll xd - Rolls x d6 and sums them up\n'
 + '$roll x~ - Rolls x d6 and gives the average\n\n'
-+ '$prob / p - Probability for the roll, in the same pattern as \"roll\"\n\n'
++ '$prob / $p - Probability for the roll, in the same pattern as \"roll\"\n\n'
++ '$fate / $roll fate - Performs a fate roll to determine uncertain outcomes'
 + '$become / $iam nickname - Allows you to change your nickname\n'
 + '$become myself - Removes your nickname\n\n'
 + '$tellme x - If you are associated with a character, you are told your bonus for stat x\n'
@@ -54,9 +55,17 @@ def handle_save(message):
   return 'Characters saved to file'
 
 def handle_roll(message):
-  request = RollRequest(message.content)
-  rnd = request.process()
-  return 'Roll as requested by {}:\n{}'.format(co.whois(message.author),rnd)
+  if ' fate' in message.content:
+    return handle_fate(message)
+  else:
+    request = RollRequest(message.content)
+    rnd = request.process()
+    return 'Roll as requested by {}:\n{}'.format(co.whois(message.author),rnd)
+
+def handle_fate(message):
+  request = FateRequest(message.content.split()[-1])
+  res = request.result()
+  return res
 
 def handle_probability(message):
   request = probability_request(message.content)

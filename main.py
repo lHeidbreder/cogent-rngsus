@@ -18,6 +18,7 @@ charownership.load_chars()
 
 command_map = {
   'info'  : msghandler.handle_info,
+  'fate'  : msghandler.handle_fate,
   'r'     : msghandler.handle_roll,
   'roll'  : msghandler.handle_roll,
   'p'     : msghandler.handle_probability,
