@@ -84,7 +84,7 @@ class FateRequest:
     if not isinstance(roll, int) or roll not in range(1,21):
       try:
         self.__roll = int(roll)
-      except TypeError:
+      except ValueError:
         self.__roll = random.randint(1,20)
     else:
       self.__roll = roll
