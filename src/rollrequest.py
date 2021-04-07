@@ -82,14 +82,13 @@ class RollRequest:
 
 class FateRequest:
   def __init__(self, roll=None):
-    if not isinstance(roll, int) or roll not in range(1,21): #FIXME: if 1 <= x <= 20 should be done properly
-      try:
-        self.__roll = int(roll)
-      except ValueError:
-        self.__roll = random.randint(1,20)
-    else:
-      self.__roll = roll
-
+    try:
+      self.__roll = int(roll)
+      if self.__roll < 1 or self.__roll > 20:
+        raise ValueError
+    except (ValueError, TypeError):
+      self.__roll = random.randint(1,20)
+  
   def result(self):
     msg = 'Alea iacta est: {}\n'.format(self.__roll)
     
