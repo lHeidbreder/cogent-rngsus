@@ -62,15 +62,16 @@ class RollRequest:
       pattern += ' t'
     
     #Make message
-    #TODO: lazier evaluation; currently makes every available answer before picking one
     msg_switcher = {
-      '$r x':   toString(amount, 'd6: ', rndvals, '\nSuccesses: ', successes),
-      '$r xd':  toString(amount, 'd6: ', rndvals, '\nSum: ', sum(rndvals)),
-      '$r x t': self.form_x_t(rndvals, successes, challenge_level),
-      '$r x~':  toString(amount, 'd6: ', rndvals, '\nAverage: ', sum(rndvals)/len(rndvals))
+      '$r x':   (toString, (amount, 'd6: ', rndvals, '\nSuccesses: ', successes)),
+      '$r xd':  (toString, (amount, 'd6: ', rndvals, '\nSum: ', sum(rndvals))),
+      '$r x t': (self.form_x_t, (rndvals, successes, challenge_level)),
+      '$r x~':  (toString, (amount, 'd6: ', rndvals, '\nAverage: ', sum(rndvals)/len(rndvals)))
     }
     #return message
-    return msg_switcher[pattern]
+    call = msg_switcher[pattern][0]
+    args = msg_switcher[pattern][1]
+    return call(*args)
     
   def form_x_t(self, values, successes, challenge_level):
     if successes >= challenge_level:
@@ -81,7 +82,7 @@ class RollRequest:
 
 class FateRequest:
   def __init__(self, roll=None):
-    if not isinstance(roll, int) or roll not in range(1,21):
+    if not isinstance(roll, int) or roll not in range(1,21): #FIXME: if 1 <= x <= 20 should be done properly
       try:
         self.__roll = int(roll)
       except ValueError:
