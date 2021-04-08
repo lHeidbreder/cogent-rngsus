@@ -62,15 +62,16 @@ class RollRequest:
       pattern += ' t'
     
     #Make message
-    #TODO: lazier evaluation; currently makes every available answer before picking one
     msg_switcher = {
-      '$r x':   toString(amount, 'd6: ', rndvals, '\nSuccesses: ', successes),
-      '$r xd':  toString(amount, 'd6: ', rndvals, '\nSum: ', sum(rndvals)),
-      '$r x t': self.form_x_t(rndvals, successes, challenge_level),
-      '$r x~':  toString(amount, 'd6: ', rndvals, '\nAverage: ', sum(rndvals)/len(rndvals))
+      '$r x':   (toString, (amount, 'd6: ', rndvals, '\nSuccesses: ', successes)),
+      '$r xd':  (toString, (amount, 'd6: ', rndvals, '\nSum: ', sum(rndvals))),
+      '$r x t': (self.form_x_t, (rndvals, successes, challenge_level)),
+      '$r x~':  (toString, (amount, 'd6: ', rndvals, '\nAverage: ', sum(rndvals)/len(rndvals)))
     }
     #return message
-    return msg_switcher[pattern]
+    call = msg_switcher[pattern][0]
+    args = msg_switcher[pattern][1]
+    return call(*args)
     
   def form_x_t(self, values, successes, challenge_level):
     if successes >= challenge_level:
@@ -81,14 +82,13 @@ class RollRequest:
 
 class FateRequest:
   def __init__(self, roll=None):
-    if not isinstance(roll, int) or roll not in range(1,21):
-      try:
-        self.__roll = int(roll)
-      except ValueError:
-        self.__roll = random.randint(1,20)
-    else:
-      self.__roll = roll
-
+    try:
+      self.__roll = int(roll)
+      if self.__roll < 1 or self.__roll > 20:
+        raise ValueError
+    except (ValueError, TypeError):
+      self.__roll = random.randint(1,20)
+  
   def result(self):
     msg = 'Alea iacta est: {}\n'.format(self.__roll)
     
